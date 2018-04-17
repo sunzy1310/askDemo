@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLAttentionHotNewsMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLAttentionHotNews">
+    <id column="NEWSID" jdbcType="VARCHAR" property="newsid" />
+    <result column="TARGETID" jdbcType="VARCHAR" property="targetid" />
+    <result column="COLUMNID" jdbcType="VARCHAR" property="columnid" />
+    <result column="NEWSURL" jdbcType="VARCHAR" property="newsurl" />
+    <result column="NEWSPLURL" jdbcType="VARCHAR" property="newsplurl" />
+    <result column="NEWSTITLE" jdbcType="VARCHAR" property="newstitle" />
+    <result column="NEWSAUTHOR" jdbcType="VARCHAR" property="newsauthor" />
+    <result column="NEWSSOURCE" jdbcType="VARCHAR" property="newssource" />
+    <result column="NEWSCONTENT" jdbcType="VARCHAR" property="newscontent" />
+    <result column="PUBDATE" jdbcType="VARCHAR" property="pubdate" />
+    <result column="PUBTIME" jdbcType="VARCHAR" property="pubtime" />
+    <result column="MAKEDATE" jdbcType="VARCHAR" property="makedate" />
+    <result column="MAKETIME" jdbcType="VARCHAR" property="maketime" />
+    <result column="PLPAGE" jdbcType="CHAR" property="plpage" />
+    <result column="LASTUPDATEDATE" jdbcType="VARCHAR" property="lastupdatedate" />
+    <result column="LASTUPDATETIME" jdbcType="VARCHAR" property="lastupdatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    NEWSID, TARGETID, COLUMNID, NEWSURL, NEWSPLURL, NEWSTITLE, NEWSAUTHOR, NEWSSOURCE, 
+    NEWSCONTENT, PUBDATE, PUBTIME, MAKEDATE, MAKETIME, PLPAGE, LASTUPDATEDATE, LASTUPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLATTENTIONHOTNEWS
+    where NEWSID = #{newsid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCountByUrlAndTargetId" resultType="int">
+    select count(1) from tblattentionhotnews where 
+	    targetId=#{tid,jdbcType=VARCHAR} and 
+	    newsurl=#{url,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAttNewsByIPAndDate" resultMap="BaseResultMap">
+    select newsid,newsplurl,newsurl from tblattentionhotnews n,tbltarget t 
+    	where n.targetid=t.targetid 
+    	and n.makedate||n.maketime &gt; #{datetime,jdbcType=VARCHAR} 
+    	and t.serverip=#{ipaddr,jdbcType=VARCHAR} 
+    	order by lastupdatedate||lastupdatetime desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLATTENTIONHOTNEWS
+    where NEWSID = #{newsid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLAttentionHotNews">
+    <selectKey keyProperty="newsid" order="BEFORE" resultType="java.lang.String">
+    	select Seq_AttentionNews.nextval from dual
+    </selectKey>
+    insert into TBLATTENTIONHOTNEWS (NEWSID, TARGETID, COLUMNID, 
+      NEWSURL, NEWSPLURL, NEWSTITLE, 
+      NEWSAUTHOR, NEWSSOURCE, NEWSCONTENT, 
+      PUBDATE, PUBTIME, MAKEDATE, 
+      MAKETIME, PLPAGE, LASTUPDATEDATE, 
+      LASTUPDATETIME)
+    values (#{newsid,jdbcType=VARCHAR}, #{targetid,jdbcType=VARCHAR}, #{columnid,jdbcType=VARCHAR}, 
+      #{newsurl,jdbcType=VARCHAR}, #{newsplurl,jdbcType=VARCHAR}, #{newstitle,jdbcType=VARCHAR}, 
+      #{newsauthor,jdbcType=VARCHAR}, #{newssource,jdbcType=VARCHAR}, #{newscontent,jdbcType=VARCHAR}, 
+      #{pubdate,jdbcType=VARCHAR}, #{pubtime,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR}, 
+      #{maketime,jdbcType=VARCHAR}, #{plpage,jdbcType=CHAR}, #{lastupdatedate,jdbcType=VARCHAR}, 
+      #{lastupdatetime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLAttentionHotNews">
+    insert into TBLATTENTIONHOTNEWS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsid != null">
+        NEWSID,
+      </if>
+      <if test="targetid != null">
+        TARGETID,
+      </if>
+      <if test="columnid != null">
+        COLUMNID,
+      </if>
+      <if test="newsurl != null">
+        NEWSURL,
+      </if>
+      <if test="newsplurl != null">
+        NEWSPLURL,
+      </if>
+      <if test="newstitle != null">
+        NEWSTITLE,
+      </if>
+      <if test="newsauthor != null">
+        NEWSAUTHOR,
+      </if>
+      <if test="newssource != null">
+        NEWSSOURCE,
+      </if>
+      <if test="newscontent != null">
+        NEWSCONTENT,
+      </if>
+      <if test="pubdate != null">
+        PUBDATE,
+      </if>
+      <if test="pubtime != null">
+        PUBTIME,
+      </if>
+      <if test="makedate != null">
+        MAKEDATE,
+      </if>
+      <if test="maketime != null">
+        MAKETIME,
+      </if>
+      <if test="plpage != null">
+        PLPAGE,
+      </if>
+      <if test="lastupdatedate != null">
+        LASTUPDATEDATE,
+      </if>
+      <if test="lastupdatetime != null">
+        LASTUPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsid != null">
+        #{newsid,jdbcType=VARCHAR},
+      </if>
+      <if test="targetid != null">
+        #{targetid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnid != null">
+        #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="newsurl != null">
+        #{newsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newsplurl != null">
+        #{newsplurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newstitle != null">
+        #{newstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsauthor != null">
+        #{newsauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="newssource != null">
+        #{newssource,jdbcType=VARCHAR},
+      </if>
+      <if test="newscontent != null">
+        #{newscontent,jdbcType=VARCHAR},
+      </if>
+      <if test="pubdate != null">
+        #{pubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        #{pubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        #{maketime,jdbcType=VARCHAR},
+      </if>
+      <if test="plpage != null">
+        #{plpage,jdbcType=CHAR},
+      </if>
+      <if test="lastupdatedate != null">
+        #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatetime != null">
+        #{lastupdatetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLAttentionHotNews">
+    update TBLATTENTIONHOTNEWS
+    <set>
+      <if test="targetid != null">
+        TARGETID = #{targetid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnid != null">
+        COLUMNID = #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="newsurl != null">
+        NEWSURL = #{newsurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newsplurl != null">
+        NEWSPLURL = #{newsplurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newstitle != null">
+        NEWSTITLE = #{newstitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsauthor != null">
+        NEWSAUTHOR = #{newsauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="newssource != null">
+        NEWSSOURCE = #{newssource,jdbcType=VARCHAR},
+      </if>
+      <if test="newscontent != null">
+        NEWSCONTENT = #{newscontent,jdbcType=VARCHAR},
+      </if>
+      <if test="pubdate != null">
+        PUBDATE = #{pubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        PUBTIME = #{pubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        MAKETIME = #{maketime,jdbcType=VARCHAR},
+      </if>
+      <if test="plpage != null">
+        PLPAGE = #{plpage,jdbcType=CHAR},
+      </if>
+      <if test="lastupdatedate != null">
+        LASTUPDATEDATE = #{lastupdatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatetime != null">
+        LASTUPDATETIME = #{lastupdatetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where NEWSID = #{newsid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLAttentionHotNews">
+    update TBLATTENTIONHOTNEWS
+    set TARGETID = #{targetid,jdbcType=VARCHAR},
+      COLUMNID = #{columnid,jdbcType=VARCHAR},
+      NEWSURL = #{newsurl,jdbcType=VARCHAR},
+      NEWSPLURL = #{newsplurl,jdbcType=VARCHAR},
+      NEWSTITLE = #{newstitle,jdbcType=VARCHAR},
+      NEWSAUTHOR = #{newsauthor,jdbcType=VARCHAR},
+      NEWSSOURCE = #{newssource,jdbcType=VARCHAR},
+      NEWSCONTENT = #{newscontent,jdbcType=VARCHAR},
+      PUBDATE = #{pubdate,jdbcType=VARCHAR},
+      PUBTIME = #{pubtime,jdbcType=VARCHAR},
+      MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      MAKETIME = #{maketime,jdbcType=VARCHAR},
+      PLPAGE = #{plpage,jdbcType=CHAR},
+      LASTUPDATEDATE = #{lastupdatedate,jdbcType=VARCHAR},
+      LASTUPDATETIME = #{lastupdatetime,jdbcType=VARCHAR}
+    where NEWSID = #{newsid,jdbcType=VARCHAR}
+  </update>
+</mapper>

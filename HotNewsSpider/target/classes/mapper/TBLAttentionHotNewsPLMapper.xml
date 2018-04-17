@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLAttentionHotNewsPLMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLAttentionHotNewsPL">
+    <id column="PLID" jdbcType="VARCHAR" property="plid" />
+    <result column="NEWSID" jdbcType="VARCHAR" property="newsid" />
+    <result column="PLAUTHOR" jdbcType="VARCHAR" property="plauthor" />
+    <result column="PLCONTENT" jdbcType="VARCHAR" property="plcontent" />
+    <result column="PLTYPE" jdbcType="CHAR" property="pltype" />
+    <result column="DZCOUNT" jdbcType="CHAR" property="dzcount" />
+    <result column="PUBDATE" jdbcType="VARCHAR" property="pubdate" />
+    <result column="PUBTIME" jdbcType="VARCHAR" property="pubtime" />
+    <result column="MAKEDATE" jdbcType="VARCHAR" property="makedate" />
+    <result column="MAKETIME" jdbcType="VARCHAR" property="maketime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PLID, NEWSID, PLAUTHOR, PLCONTENT, PLTYPE, DZCOUNT, PUBDATE, PUBTIME, MAKEDATE, MAKETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLATTENTIONHOTNEWSPL
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLATTENTIONHOTNEWSPL
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertList" parameterType="java.util.List">
+    insert into TBLATTENTIONHOTNEWSPL (PLID, NEWSID, PLAUTHOR, 
+      PLCONTENT, PLTYPE, DZCOUNT, 
+      PUBDATE, PUBTIME, MAKEDATE, 
+      MAKETIME)
+    select seq_tblattentionpl.nextval plid,n.* from(
+      <foreach collection="list" item="newspl" separator="union all">
+      	select #{newspl.newsid,jdbcType=VARCHAR} newsid,
+      		#{newspl.plauthor,jdbcType=VARCHAR} plauthor, 
+	      	#{newspl.plcontent,jdbcType=VARCHAR} plcontent, 
+	      	#{newspl.pltype,jdbcType=CHAR} pltype, 
+	      	#{newspl.dzcount,jdbcType=CHAR} dzcount,
+	      	#{pubdate,jdbcType=VARCHAR} pubdate,
+	      	#{newspl.pubtime,jdbcType=VARCHAR} pubtime, 
+	      	#{newspl.makedate,jdbcType=VARCHAR} makedate, 
+	      	#{newspl.maketime,jdbcType=VARCHAR} maketime 
+	    from dual 
+      </foreach>
+    )
+  </insert>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLAttentionHotNewsPL">
+    insert into TBLATTENTIONHOTNEWSPL (PLID, NEWSID, PLAUTHOR, 
+      PLCONTENT, PLTYPE, DZCOUNT,PUBDATE, PUBTIME, MAKEDATE, MAKETIME)
+    values (#{plid,jdbcType=VARCHAR}, #{newsid,jdbcType=VARCHAR}, #{plauthor,jdbcType=VARCHAR}, 
+      #{plcontent,jdbcType=VARCHAR}, #{pltype,jdbcType=CHAR}, #{dzcount,jdbcType=CHAR}, 
+      #{pubdate,jdbcType=VARCHAR}, #{pubtime,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR}, 
+      #{maketime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLAttentionHotNewsPL">
+    insert into TBLATTENTIONHOTNEWSPL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="plid != null">
+        PLID,
+      </if>
+      <if test="newsid != null">
+        NEWSID,
+      </if>
+      <if test="plauthor != null">
+        PLAUTHOR,
+      </if>
+      <if test="plcontent != null">
+        PLCONTENT,
+      </if>
+      <if test="pltype != null">
+        PLTYPE,
+      </if>
+      <if test="dzcount != null">
+        DZCOUNT,
+      </if>
+      <if test="pubdate != null">
+        PUBDATE,
+      </if>
+      <if test="pubtime != null">
+        PUBTIME,
+      </if>
+      <if test="makedate != null">
+        MAKEDATE,
+      </if>
+      <if test="maketime != null">
+        MAKETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="plid != null">
+        #{plid,jdbcType=VARCHAR},
+      </if>
+      <if test="newsid != null">
+        #{newsid,jdbcType=VARCHAR},
+      </if>
+      <if test="plauthor != null">
+        #{plauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="plcontent != null">
+        #{plcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="pltype != null">
+        #{pltype,jdbcType=CHAR},
+      </if>
+      <if test="dzcount != null">
+        #{dzcount,jdbcType=CHAR},
+      </if>
+      <if test="pubdate != null">
+        #{pubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        #{pubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        #{maketime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLAttentionHotNewsPL">
+    update TBLATTENTIONHOTNEWSPL
+    <set>
+      <if test="newsid != null">
+        NEWSID = #{newsid,jdbcType=VARCHAR},
+      </if>
+      <if test="plauthor != null">
+        PLAUTHOR = #{plauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="plcontent != null">
+        PLCONTENT = #{plcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="pltype != null">
+        PLTYPE = #{pltype,jdbcType=CHAR},
+      </if>
+      <if test="dzcount != null">
+        DZCOUNT = #{dzcount,jdbcType=CHAR},
+      </if>
+      <if test="pubdate != null">
+        PUBDATE = #{pubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="pubtime != null">
+        PUBTIME = #{pubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        MAKETIME = #{maketime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLAttentionHotNewsPL">
+    update TBLATTENTIONHOTNEWSPL
+    set NEWSID = #{newsid,jdbcType=VARCHAR},
+      PLAUTHOR = #{plauthor,jdbcType=VARCHAR},
+      PLCONTENT = #{plcontent,jdbcType=VARCHAR},
+      PLTYPE = #{pltype,jdbcType=CHAR},
+      DZCOUNT = #{dzcount,jdbcType=CHAR},
+      PUBDATE = #{pubdate,jdbcType=VARCHAR},
+      PUBTIME = #{pubtime,jdbcType=VARCHAR},
+      MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      MAKETIME = #{maketime,jdbcType=VARCHAR}
+    where PLID = #{plid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLPostMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLPost">
+    <id column="ARTICLEID" jdbcType="VARCHAR" property="articleid" />
+    <result column="COLUMNID" jdbcType="VARCHAR" property="columnid" />
+    <result column="COLUMNNAME" jdbcType="VARCHAR" property="columnname" />
+    <result column="COLUMNURL" jdbcType="VARCHAR" property="columnurl" />
+    <result column="ARTTITLE" jdbcType="VARCHAR" property="arttitle" />
+    <result column="ARTURL" jdbcType="VARCHAR" property="arturl" />
+    <result column="ARTAUTHOR" jdbcType="VARCHAR" property="artauthor" />
+    <result column="ARTSOURCE" jdbcType="VARCHAR" property="artsource" />
+    <result column="ARTCONTENT" jdbcType="VARCHAR" property="artcontent" />
+    <result column="ARTPUBDATE" jdbcType="VARCHAR" property="artpubdate" />
+    <result column="ARTPUBTIME" jdbcType="VARCHAR" property="artpubtime" />
+    <result column="CREATEDATE" jdbcType="VARCHAR" property="createdate" />
+    <result column="CREATETIME" jdbcType="VARCHAR" property="createtime" />
+    <result column="SYNCSTATUS" jdbcType="CHAR" property="syncstatus" />
+    <result column="WEBID" jdbcType="VARCHAR" property="webid" />
+    <result column="WEBNAME" jdbcType="VARCHAR" property="webname" />
+    <result column="WEBTYPE" jdbcType="VARCHAR" property="webtype" />
+    <result column="WEBURL" jdbcType="VARCHAR" property="weburl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ARTICLEID, COLUMNID, COLUMNNAME, COLUMNURL, ARTTITLE, ARTURL, ARTAUTHOR, ARTSOURCE, 
+    ARTCONTENT, ARTPUBDATE, ARTPUBTIME, CREATEDATE, CREATETIME, SYNCSTATUS, WEBID, WEBNAME, 
+    WEBTYPE, WEBURL
+  </sql>
+
+  <select id="selectPKBySeqName" parameterType="java.lang.String"
+	resultType="long">
+	<if test="_parameter == 'Seq_TBLPost'.toString()">
+		select Seq_TBLPost.nextval from dual
+	</if>
+  </select>  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLPOST
+    where ARTICLEID = #{articleid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLPOST
+    where ARTICLEID = #{articleid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLPost">
+    insert into TBLPOST (ARTICLEID, COLUMNID, COLUMNNAME, 
+      COLUMNURL, ARTTITLE, ARTURL, 
+      ARTAUTHOR, ARTSOURCE, ARTCONTENT, 
+      ARTPUBDATE, ARTPUBTIME, CREATEDATE, 
+      CREATETIME, SYNCSTATUS, WEBID, 
+      WEBNAME, WEBTYPE, WEBURL
+      )
+    values (#{articleid,jdbcType=VARCHAR}, #{columnid,jdbcType=VARCHAR}, #{columnname,jdbcType=VARCHAR}, 
+      #{columnurl,jdbcType=VARCHAR}, #{arttitle,jdbcType=VARCHAR}, #{arturl,jdbcType=VARCHAR}, 
+      #{artauthor,jdbcType=VARCHAR}, #{artsource,jdbcType=VARCHAR}, #{artcontent,jdbcType=VARCHAR}, 
+      #{artpubdate,jdbcType=VARCHAR}, #{artpubtime,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{syncstatus,jdbcType=CHAR}, #{webid,jdbcType=VARCHAR}, 
+      #{webname,jdbcType=VARCHAR}, #{webtype,jdbcType=VARCHAR}, #{weburl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLPost">
+    insert into TBLPOST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleid != null">
+        ARTICLEID,
+      </if>
+      <if test="columnid != null">
+        COLUMNID,
+      </if>
+      <if test="columnname != null">
+        COLUMNNAME,
+      </if>
+      <if test="columnurl != null">
+        COLUMNURL,
+      </if>
+      <if test="arttitle != null">
+        ARTTITLE,
+      </if>
+      <if test="arturl != null">
+        ARTURL,
+      </if>
+      <if test="artauthor != null">
+        ARTAUTHOR,
+      </if>
+      <if test="artsource != null">
+        ARTSOURCE,
+      </if>
+      <if test="artcontent != null">
+        ARTCONTENT,
+      </if>
+      <if test="artpubdate != null">
+        ARTPUBDATE,
+      </if>
+      <if test="artpubtime != null">
+        ARTPUBTIME,
+      </if>
+      <if test="createdate != null">
+        CREATEDATE,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="syncstatus != null">
+        SYNCSTATUS,
+      </if>
+      <if test="webid != null">
+        WEBID,
+      </if>
+      <if test="webname != null">
+        WEBNAME,
+      </if>
+      <if test="webtype != null">
+        WEBTYPE,
+      </if>
+      <if test="weburl != null">
+        WEBURL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleid != null">
+        #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnid != null">
+        #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnname != null">
+        #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="columnurl != null">
+        #{columnurl,jdbcType=VARCHAR},
+      </if>
+      <if test="arttitle != null">
+        #{arttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="arturl != null">
+        #{arturl,jdbcType=VARCHAR},
+      </if>
+      <if test="artauthor != null">
+        #{artauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="artsource != null">
+        #{artsource,jdbcType=VARCHAR},
+      </if>
+      <if test="artcontent != null">
+        #{artcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="artpubdate != null">
+        #{artpubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="artpubtime != null">
+        #{artpubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstatus != null">
+        #{syncstatus,jdbcType=CHAR},
+      </if>
+      <if test="webid != null">
+        #{webid,jdbcType=VARCHAR},
+      </if>
+      <if test="webname != null">
+        #{webname,jdbcType=VARCHAR},
+      </if>
+      <if test="webtype != null">
+        #{webtype,jdbcType=VARCHAR},
+      </if>
+      <if test="weburl != null">
+        #{weburl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLPost">
+    update TBLPOST
+    <set>
+      <if test="columnid != null">
+        COLUMNID = #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnname != null">
+        COLUMNNAME = #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="columnurl != null">
+        COLUMNURL = #{columnurl,jdbcType=VARCHAR},
+      </if>
+      <if test="arttitle != null">
+        ARTTITLE = #{arttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="arturl != null">
+        ARTURL = #{arturl,jdbcType=VARCHAR},
+      </if>
+      <if test="artauthor != null">
+        ARTAUTHOR = #{artauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="artsource != null">
+        ARTSOURCE = #{artsource,jdbcType=VARCHAR},
+      </if>
+      <if test="artcontent != null">
+        ARTCONTENT = #{artcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="artpubdate != null">
+        ARTPUBDATE = #{artpubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="artpubtime != null">
+        ARTPUBTIME = #{artpubtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstatus != null">
+        SYNCSTATUS = #{syncstatus,jdbcType=CHAR},
+      </if>
+      <if test="webid != null">
+        WEBID = #{webid,jdbcType=VARCHAR},
+      </if>
+      <if test="webname != null">
+        WEBNAME = #{webname,jdbcType=VARCHAR},
+      </if>
+      <if test="webtype != null">
+        WEBTYPE = #{webtype,jdbcType=VARCHAR},
+      </if>
+      <if test="weburl != null">
+        WEBURL = #{weburl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ARTICLEID = #{articleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLPost">
+    update TBLPOST
+    set COLUMNID = #{columnid,jdbcType=VARCHAR},
+      COLUMNNAME = #{columnname,jdbcType=VARCHAR},
+      COLUMNURL = #{columnurl,jdbcType=VARCHAR},
+      ARTTITLE = #{arttitle,jdbcType=VARCHAR},
+      ARTURL = #{arturl,jdbcType=VARCHAR},
+      ARTAUTHOR = #{artauthor,jdbcType=VARCHAR},
+      ARTSOURCE = #{artsource,jdbcType=VARCHAR},
+      ARTCONTENT = #{artcontent,jdbcType=VARCHAR},
+      ARTPUBDATE = #{artpubdate,jdbcType=VARCHAR},
+      ARTPUBTIME = #{artpubtime,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=VARCHAR},
+      SYNCSTATUS = #{syncstatus,jdbcType=CHAR},
+      WEBID = #{webid,jdbcType=VARCHAR},
+      WEBNAME = #{webname,jdbcType=VARCHAR},
+      WEBTYPE = #{webtype,jdbcType=VARCHAR},
+      WEBURL = #{weburl,jdbcType=VARCHAR}
+    where ARTICLEID = #{articleid,jdbcType=VARCHAR}
+  </update>
+</mapper>

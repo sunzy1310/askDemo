@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLCollectWebMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLCollectWeb">
+    <id column="COLUMNID" jdbcType="VARCHAR" property="columnid" />
+    <result column="TARGETID" jdbcType="VARCHAR" property="targetid" />
+    <result column="COLUMNNAME" jdbcType="VARCHAR" property="columnname" />
+    <result column="WEBTYPE" jdbcType="VARCHAR" property="webtype" />
+    <result column="COLUMNURL" jdbcType="VARCHAR" property="columnurl" />
+    <result column="URLRULE" jdbcType="VARCHAR" property="urlrule" />
+    <result column="URLHOST" jdbcType="VARCHAR" property="urlhost" />
+    <result column="RUNSTATUS" jdbcType="CHAR" property="runstatus" />
+    <result column="MAKEDATE" jdbcType="VARCHAR" property="makedate" />
+    <result column="MAKETIME" jdbcType="VARCHAR" property="maketime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    COLUMNID, TARGETID, COLUMNNAME, WEBTYPE, COLUMNURL, URLRULE, URLHOST, RUNSTATUS, 
+    MAKEDATE, MAKETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLCOLLECTWEB
+    where COLUMNID = #{columnid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCollectWebByTargetID" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select columnid,webtype,columnurl,urlhost,urlrule from tblcollectweb 
+  	where targetid=#{targetId,jdbcType=VARCHAR} and runstatus='0'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLCOLLECTWEB
+    where COLUMNID = #{columnid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLCollectWeb">
+    insert into TBLCOLLECTWEB (COLUMNID, TARGETID, COLUMNNAME, 
+      WEBTYPE, COLUMNURL, URLRULE, 
+      URLHOST, RUNSTATUS, MAKEDATE, 
+      MAKETIME)
+    values (#{columnid,jdbcType=VARCHAR}, #{targetid,jdbcType=VARCHAR}, #{columnname,jdbcType=VARCHAR}, 
+      #{webtype,jdbcType=VARCHAR}, #{columnurl,jdbcType=VARCHAR}, #{urlrule,jdbcType=VARCHAR}, 
+      #{urlhost,jdbcType=VARCHAR}, #{runstatus,jdbcType=CHAR}, #{makedate,jdbcType=VARCHAR}, 
+      #{maketime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLCollectWeb">
+    insert into TBLCOLLECTWEB
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="columnid != null">
+        COLUMNID,
+      </if>
+      <if test="targetid != null">
+        TARGETID,
+      </if>
+      <if test="columnname != null">
+        COLUMNNAME,
+      </if>
+      <if test="webtype != null">
+        WEBTYPE,
+      </if>
+      <if test="columnurl != null">
+        COLUMNURL,
+      </if>
+      <if test="urlrule != null">
+        URLRULE,
+      </if>
+      <if test="urlhost != null">
+        URLHOST,
+      </if>
+      <if test="runstatus != null">
+        RUNSTATUS,
+      </if>
+      <if test="makedate != null">
+        MAKEDATE,
+      </if>
+      <if test="maketime != null">
+        MAKETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="columnid != null">
+        #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="targetid != null">
+        #{targetid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnname != null">
+        #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="webtype != null">
+        #{webtype,jdbcType=VARCHAR},
+      </if>
+      <if test="columnurl != null">
+        #{columnurl,jdbcType=VARCHAR},
+      </if>
+      <if test="urlrule != null">
+        #{urlrule,jdbcType=VARCHAR},
+      </if>
+      <if test="urlhost != null">
+        #{urlhost,jdbcType=VARCHAR},
+      </if>
+      <if test="runstatus != null">
+        #{runstatus,jdbcType=CHAR},
+      </if>
+      <if test="makedate != null">
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        #{maketime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLCollectWeb">
+    update TBLCOLLECTWEB
+    <set>
+      <if test="targetid != null">
+        TARGETID = #{targetid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnname != null">
+        COLUMNNAME = #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="webtype != null">
+        WEBTYPE = #{webtype,jdbcType=VARCHAR},
+      </if>
+      <if test="columnurl != null">
+        COLUMNURL = #{columnurl,jdbcType=VARCHAR},
+      </if>
+      <if test="urlrule != null">
+        URLRULE = #{urlrule,jdbcType=VARCHAR},
+      </if>
+      <if test="urlhost != null">
+        URLHOST = #{urlhost,jdbcType=VARCHAR},
+      </if>
+      <if test="runstatus != null">
+        RUNSTATUS = #{runstatus,jdbcType=CHAR},
+      </if>
+      <if test="makedate != null">
+        MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        MAKETIME = #{maketime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COLUMNID = #{columnid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLCollectWeb">
+    update TBLCOLLECTWEB
+    set TARGETID = #{targetid,jdbcType=VARCHAR},
+      COLUMNNAME = #{columnname,jdbcType=VARCHAR},
+      WEBTYPE = #{webtype,jdbcType=VARCHAR},
+      COLUMNURL = #{columnurl,jdbcType=VARCHAR},
+      URLRULE = #{urlrule,jdbcType=VARCHAR},
+      URLHOST = #{urlhost,jdbcType=VARCHAR},
+      RUNSTATUS = #{runstatus,jdbcType=CHAR},
+      MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      MAKETIME = #{maketime,jdbcType=VARCHAR}
+    where COLUMNID = #{columnid,jdbcType=VARCHAR}
+  </update>
+</mapper>

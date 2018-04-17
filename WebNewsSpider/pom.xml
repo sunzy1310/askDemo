@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.keyten</groupId>
+    <artifactId>CollectProFactory</artifactId>
+    <version>1.0</version>
+  </parent>
+  <artifactId>WebNewsSpider</artifactId>
+  <packaging>war</packaging>
+  
+  <properties>
+  	<jedis-version>2.9.0</jedis-version>
+  </properties>
+  <dependencies>
+  	<!-- 所有项目共用Util工具包 -->
+  	<dependency>
+  		<groupId>com.keyten</groupId>
+  		<artifactId>CollectUtils</artifactId>
+  		<version>1.0</version>
+  	</dependency>
+  	<!-- jedis -->
+	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+		<version>${jedis-version}</version>
+	</dependency>
+  </dependencies>
+</project>

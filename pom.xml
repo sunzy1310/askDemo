@@ -1,0 +1,144 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.keyten</groupId>
+	<artifactId>CollectProFactory</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+
+
+	<properties>
+		<spring-version>4.3.14.RELEASE</spring-version>
+		<mybatis-version>3.4.5</mybatis-version>
+		<mybatis-spring>1.3.1</mybatis-spring>
+		<oracle-jdbc>11.1.0.7.0</oracle-jdbc>
+		<db-pool-druid>1.1.8</db-pool-druid>
+		<db-pool-c3p0>0.9.1</db-pool-c3p0>
+		<jsoup>1.11.2</jsoup>
+		<httpCliect>4.5.2</httpCliect>
+		<log4j-version>1.2.17</log4j-version>
+		<org-json-version>20180130</org-json-version>
+		<base-servlet-api>3.0.1</base-servlet-api>
+		<base-junit>4.12</base-junit>
+	</properties>
+	<dependencies>
+		<!--Spring aop -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+		<!--Spring aop -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+		<!--Spring web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+		<!-- Spring-JDBC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+		<!-- Spring 面向切面编程 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
+		<!-- Spring 单元测试模块 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- MyBaties -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis-version}</version>
+		</dependency>
+		<!-- MyBaties 整合Spring的适配包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring}</version>
+		</dependency>
+		<!-- oracle数据库 -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>${oracle-jdbc}</version>
+		</dependency>
+		<!-- 数据库连接池、驱动 -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${db-pool-c3p0}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${db-pool-druid}</version>
+		</dependency>
+
+		<!-- 开发工具类 -->
+		<!-- httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpCliect}</version>
+		</dependency>
+
+		<!-- jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j-version}</version>
+		</dependency>
+		<!-- org json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>${org-json-version}</version>
+		</dependency>
+
+		<!-- 服务器中包含servet-api,开发环境中页面中不提供会报错需要加入<scope>provided</scope> 发布到服务器会自动剔除掉 -->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${base-servlet-api}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${base-junit}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>CollectUtils</module>
+		<module>WebNewsSpider</module>
+		<module>HotNewsSpider</module>
+		<module>askinfo</module>
+		<module>WeiboSpider</module>
+		<module>AskSpider</module>
+		<module>SpecialNewsSpider</module>
+		<module>SearchEnginesSpider</module>
+	</modules>
+</project>

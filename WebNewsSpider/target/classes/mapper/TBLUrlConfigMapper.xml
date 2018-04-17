@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLUrlConfigMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLUrlConfig">
+    <id column="RULEID" jdbcType="VARCHAR" property="ruleid" />
+    <result column="COLUMNID" jdbcType="VARCHAR" property="columnid" />
+    <result column="RULETYPE" jdbcType="VARCHAR" property="ruletype" />
+    <result column="MATCHRULE" jdbcType="VARCHAR" property="matchrule" />
+    <result column="MATCHRANGE" jdbcType="VARCHAR" property="matchrange" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    RULEID, COLUMNID, RULETYPE, MATCHRULE, MATCHRANGE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLURLCONFIG
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLURLCONFIG
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLUrlConfig">
+    insert into TBLURLCONFIG (RULEID, COLUMNID, RULETYPE, 
+      MATCHRULE, MATCHRANGE)
+    values (#{ruleid,jdbcType=VARCHAR}, #{columnid,jdbcType=VARCHAR}, #{ruletype,jdbcType=VARCHAR}, 
+      #{matchrule,jdbcType=VARCHAR}, #{matchrange,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLUrlConfig">
+    insert into TBLURLCONFIG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ruleid != null">
+        RULEID,
+      </if>
+      <if test="columnid != null">
+        COLUMNID,
+      </if>
+      <if test="ruletype != null">
+        RULETYPE,
+      </if>
+      <if test="matchrule != null">
+        MATCHRULE,
+      </if>
+      <if test="matchrange != null">
+        MATCHRANGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnid != null">
+        #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="ruletype != null">
+        #{ruletype,jdbcType=VARCHAR},
+      </if>
+      <if test="matchrule != null">
+        #{matchrule,jdbcType=VARCHAR},
+      </if>
+      <if test="matchrange != null">
+        #{matchrange,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLUrlConfig">
+    update TBLURLCONFIG
+    <set>
+      <if test="columnid != null">
+        COLUMNID = #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="ruletype != null">
+        RULETYPE = #{ruletype,jdbcType=VARCHAR},
+      </if>
+      <if test="matchrule != null">
+        MATCHRULE = #{matchrule,jdbcType=VARCHAR},
+      </if>
+      <if test="matchrange != null">
+        MATCHRANGE = #{matchrange,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLUrlConfig">
+    update TBLURLCONFIG
+    set COLUMNID = #{columnid,jdbcType=VARCHAR},
+      RULETYPE = #{ruletype,jdbcType=VARCHAR},
+      MATCHRULE = #{matchrule,jdbcType=VARCHAR},
+      MATCHRANGE = #{matchrange,jdbcType=VARCHAR}
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </update>
+</mapper>

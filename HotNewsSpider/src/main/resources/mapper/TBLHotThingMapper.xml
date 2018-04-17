@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLHotThingMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLHotThing">
+    <id column="THINGID" jdbcType="VARCHAR" property="thingid" />
+    <result column="THINGWORD" jdbcType="VARCHAR" property="thingword" />
+    <result column="MAKEDATE" jdbcType="VARCHAR" property="makedate" />
+    <result column="MAKETIME" jdbcType="VARCHAR" property="maketime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    THINGID, THINGWORD, MAKEDATE, MAKETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLHOTTHING
+    where THINGID = #{thingid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLHOTTHING
+    where THINGID = #{thingid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLHotThing">
+	<selectKey order="BEFORE" keyProperty="thingid" resultType="java.lang.String">
+		select Seq_HotThing.Nextval from dual
+	</selectKey>
+    insert into TBLHOTTHING (THINGID, THINGWORD, MAKEDATE, 
+      MAKETIME)
+    values 
+      (#{thingid,jdbcType=VARCHAR}, #{thingword,jdbcType=VARCHAR}, 
+      #{makedate,jdbcType=VARCHAR}, #{maketime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLHotThing">
+    <selectKey order="BEFORE" keyProperty="thingid" resultType="java.lang.String">
+		select Seq_HotThing.Nextval from dual
+	</selectKey>
+    insert into TBLHOTTHING
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="thingid != null">
+        THINGID,
+      </if>
+      <if test="thingword != null">
+        THINGWORD,
+      </if>
+      <if test="makedate != null">
+        MAKEDATE,
+      </if>
+      <if test="maketime != null">
+        MAKETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="thingid != null">
+        #{thingid,jdbcType=VARCHAR},
+      </if>
+      <if test="thingword != null">
+        #{thingword,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        #{maketime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLHotThing">
+    update TBLHOTTHING
+    <set>
+      <if test="thingword != null">
+        THINGWORD = #{thingword,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        MAKETIME = #{maketime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where THINGID = #{thingid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLHotThing">
+    update TBLHOTTHING
+    set THINGWORD = #{thingword,jdbcType=VARCHAR},
+      MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      MAKETIME = #{maketime,jdbcType=VARCHAR}
+    where THINGID = #{thingid,jdbcType=VARCHAR}
+  </update>
+</mapper>

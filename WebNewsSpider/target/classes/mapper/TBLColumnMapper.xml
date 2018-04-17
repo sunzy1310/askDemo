@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLColumnMapper">
+	<resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLColumn">
+		<id column="COLUMNID" jdbcType="VARCHAR" property="columnid" />
+		<result column="COLUMNNAME" jdbcType="VARCHAR" property="columnname" />
+		<result column="COLUMNURL" jdbcType="VARCHAR" property="columnurl" />
+		<result column="COLUMNCHARSET" jdbcType="VARCHAR" property="columncharset" />
+		<result column="MATCHTYPE" jdbcType="CHAR" property="matchtype" />
+		<result column="BCONTENT" jdbcType="VARCHAR" property="bcontent" />
+		<result column="ISMONITOR" jdbcType="CHAR" property="ismonitor" />
+		<result column="URLCFGSTATUS" jdbcType="CHAR" property="urlcfgstatus" />
+		<result column="ELEMENTCFGSTATUS" jdbcType="CHAR" property="elementcfgstatus" />
+		<result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+		<result column="COMCODE" jdbcType="VARCHAR" property="comcode" />
+		<result column="MAKEDATE" jdbcType="VARCHAR" property="makedate" />
+		<result column="MAKETIME" jdbcType="VARCHAR" property="maketime" />
+		<result column="WEBID" jdbcType="VARCHAR" property="webid" />
+		<result column="WEBNAME" jdbcType="VARCHAR" property="webname" />
+		<result column="WEBURL" jdbcType="VARCHAR" property="weburl" />
+		<result column="CHECKSTATUS" jdbcType="CHAR" property="checkstatus" />
+		<result column="CHECKDATE" jdbcType="VARCHAR" property="checkdate" />
+		<result column="CHECKTIME" jdbcType="VARCHAR" property="checktime" />
+		<result column="PUBSTATUS" jdbcType="CHAR" property="pubstatus" />
+		<result column="PUBDATE" jdbcType="VARCHAR" property="pubdate" />
+		<result column="PUBTIME" jdbcType="VARCHAR" property="pubtime" />
+		<result column="SERVERID" jdbcType="VARCHAR" property="serverid" />
+		<result column="IPADDR" jdbcType="VARCHAR" property="ipaddr" />
+		<result column="LASTCOLLECTDATE" jdbcType="VARCHAR" property="lastcollectdate" />
+		<result column="LASTCOLLECTTIME" jdbcType="VARCHAR" property="lastcollecttime" />
+		<result column="COLLECTINTERVAL" jdbcType="DECIMAL" property="collectinterval" />
+		<result column="EXPIRYDATE" jdbcType="DECIMAL" property="expirydate" />
+		<result column="PUBRATE" jdbcType="DECIMAL" property="pubrate" />
+		<result column="WEBTYPE" jdbcType="VARCHAR" property="webtype" />
+	</resultMap>
+	<resultMap type="com.keyten.base.bean.TBLColumn" id="InitResultMap">
+		<id column="COLUMNID" jdbcType="VARCHAR" property="columnid" />
+		<result column="COLUMNNAME" jdbcType="VARCHAR" property="columnname" />
+		<result column="COLUMNURL" jdbcType="VARCHAR" property="columnurl" />
+		<result column="COLUMNCHARSET" jdbcType="VARCHAR" property="columncharset" />
+		<result column="MATCHTYPE" jdbcType="CHAR" property="matchtype" />
+		<result column="BCONTENT" jdbcType="VARCHAR" property="bcontent" />
+		<result column="WEBID" jdbcType="VARCHAR" property="webid" />
+		<result column="WEBNAME" jdbcType="VARCHAR" property="webname" />
+		<result column="WEBURL" jdbcType="VARCHAR" property="weburl" />
+		<result column="WEBTYPE" jdbcType="VARCHAR" property="webtype" />
+		
+		<collection property="urlcfg" ofType="com.keyten.base.bean.TBLUrlConfig">
+			<result column="urlrule" property="matchrule"/>
+			<result column="matchrange" property="matchrange"/>
+		</collection>
+		<collection property="elecfg" ofType="com.keyten.base.bean.TBLElementConfig">
+			<result column="elementtype" property="elementtype"/>
+			<result column="ruletype" property="ruletype"/>
+			<result column="elerule" property="matchrule"/>
+			<result column="matchorder" property="matchorder"/>
+			<result column="childlabel" property="childlabel"/>
+		</collection>
+	</resultMap>
+	<sql id="Base_Column_List">
+		COLUMNID, COLUMNNAME, COLUMNURL, COLUMNCHARSET, MATCHTYPE,
+		BCONTENT, ISMONITOR,
+		URLCFGSTATUS,
+		ELEMENTCFGSTATUS, OPERATOR, COMCODE,
+		MAKEDATE, MAKETIME, WEBID, WEBNAME, WEBURL,
+		CHECKSTATUS, CHECKDATE,
+		CHECKTIME, PUBSTATUS, PUBDATE, PUBTIME,
+		SERVERID, IPADDR,
+		LASTCOLLECTDATE, LASTCOLLECTTIME, COLLECTINTERVAL, EXPIRYDATE,
+		PUBRATE, WEBTYPE
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TBLCOLUMN
+		where COLUMNID = #{columnid,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAllColumnAndRules" parameterType="java.lang.String"
+		resultMap="InitResultMap">
+		select col.columnid columnid,columnname,columnurl,columncharset,matchtype,bcontent,
+		matchrange,cf.matchrule urlrule,elementtype,ef.ruletype ruletype,matchorder, 
+		ef.matchrule elerule,childlabel,webid,webname,weburl,webtype 
+		from tblcolumn col left join tblurlconfig cf on col.columnid=cf.columnid 
+		left join tblelementconfig ef on col.columnid=ef.columnid 
+		where ipaddr=#{ipaddr,jdbcType=VARCHAR} and ismonitor='0'
+	</select>
+	<select id="selectColumnAndRulesById" parameterType="java.lang.String"
+		resultMap="InitResultMap">
+		select col.columnid columnid,columnname,columnurl,columncharset,matchtype,bcontent,
+		matchrange,cf.matchrule urlrule,elementtype,ef.ruletype ruletype,matchorder, 
+		ef.matchrule elerule,childlabel,webid,webname,weburl,webtype 
+		from tblcolumn col left join tblurlconfig cf on col.columnid=cf.columnid 
+		left join tblelementconfig ef on col.columnid=ef.columnid 
+		where col.columnid=#{columnid,jdbcType=VARCHAR}
+	</select>
+	<select id="selectTaskColumnIds" resultType="java.lang.String">
+		select columnid from tblcolumn where 
+			floor((sysdate - To_date(lastcollectdate||' '||lastcollecttime , 'yyyy-mm-dd hh24:mi:ss')) * 24 * 60) &gt;= collectinterval 
+			and ismonitor='0' 
+			<if test="isHottime!=0">
+				and collectinterval &lt;='30' 
+			</if> 
+			and ipaddr=#{ipaddr,jdbcType=VARCHAR} 
+			order by collectinterval,lastcollectdate||lastcollecttime
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		TBLCOLUMN
+		where COLUMNID = #{columnid,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.keyten.base.bean.TBLColumn">
+		insert into TBLCOLUMN
+		(COLUMNID, COLUMNNAME, COLUMNURL,
+		COLUMNCHARSET, MATCHTYPE, BCONTENT,
+		ISMONITOR, URLCFGSTATUS, ELEMENTCFGSTATUS,
+		OPERATOR, COMCODE, MAKEDATE,
+		MAKETIME, WEBID, WEBNAME,
+		WEBURL, CHECKSTATUS, CHECKDATE,
+		CHECKTIME,
+		PUBSTATUS, PUBDATE,
+		PUBTIME, SERVERID, IPADDR,
+		LASTCOLLECTDATE,
+		LASTCOLLECTTIME, COLLECTINTERVAL,
+		EXPIRYDATE, PUBRATE, WEBTYPE
+		)
+		values
+		(#{columnid,jdbcType=VARCHAR}, #{columnname,jdbcType=VARCHAR},
+		#{columnurl,jdbcType=VARCHAR},
+		#{columncharset,jdbcType=VARCHAR},
+		#{matchtype,jdbcType=CHAR}, #{bcontent,jdbcType=VARCHAR},
+		#{ismonitor,jdbcType=CHAR}, #{urlcfgstatus,jdbcType=CHAR},
+		#{elementcfgstatus,jdbcType=CHAR},
+		#{operator,jdbcType=VARCHAR},
+		#{comcode,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR},
+		#{maketime,jdbcType=VARCHAR}, #{webid,jdbcType=VARCHAR},
+		#{webname,jdbcType=VARCHAR},
+		#{weburl,jdbcType=VARCHAR},
+		#{checkstatus,jdbcType=CHAR}, #{checkdate,jdbcType=VARCHAR},
+		#{checktime,jdbcType=VARCHAR}, #{pubstatus,jdbcType=CHAR},
+		#{pubdate,jdbcType=VARCHAR},
+		#{pubtime,jdbcType=VARCHAR},
+		#{serverid,jdbcType=VARCHAR}, #{ipaddr,jdbcType=VARCHAR},
+		#{lastcollectdate,jdbcType=VARCHAR},
+		#{lastcollecttime,jdbcType=VARCHAR},
+		#{collectinterval,jdbcType=DECIMAL},
+		#{expirydate,jdbcType=DECIMAL},
+		#{pubrate,jdbcType=DECIMAL}, #{webtype,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.keyten.base.bean.TBLColumn">
+		insert into TBLCOLUMN
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="columnid != null">
+				COLUMNID,
+			</if>
+			<if test="columnname != null">
+				COLUMNNAME,
+			</if>
+			<if test="columnurl != null">
+				COLUMNURL,
+			</if>
+			<if test="columncharset != null">
+				COLUMNCHARSET,
+			</if>
+			<if test="matchtype != null">
+				MATCHTYPE,
+			</if>
+			<if test="bcontent != null">
+				BCONTENT,
+			</if>
+			<if test="ismonitor != null">
+				ISMONITOR,
+			</if>
+			<if test="urlcfgstatus != null">
+				URLCFGSTATUS,
+			</if>
+			<if test="elementcfgstatus != null">
+				ELEMENTCFGSTATUS,
+			</if>
+			<if test="operator != null">
+				OPERATOR,
+			</if>
+			<if test="comcode != null">
+				COMCODE,
+			</if>
+			<if test="makedate != null">
+				MAKEDATE,
+			</if>
+			<if test="maketime != null">
+				MAKETIME,
+			</if>
+			<if test="webid != null">
+				WEBID,
+			</if>
+			<if test="webname != null">
+				WEBNAME,
+			</if>
+			<if test="weburl != null">
+				WEBURL,
+			</if>
+			<if test="checkstatus != null">
+				CHECKSTATUS,
+			</if>
+			<if test="checkdate != null">
+				CHECKDATE,
+			</if>
+			<if test="checktime != null">
+				CHECKTIME,
+			</if>
+			<if test="pubstatus != null">
+				PUBSTATUS,
+			</if>
+			<if test="pubdate != null">
+				PUBDATE,
+			</if>
+			<if test="pubtime != null">
+				PUBTIME,
+			</if>
+			<if test="serverid != null">
+				SERVERID,
+			</if>
+			<if test="ipaddr != null">
+				IPADDR,
+			</if>
+			<if test="lastcollectdate != null">
+				LASTCOLLECTDATE,
+			</if>
+			<if test="lastcollecttime != null">
+				LASTCOLLECTTIME,
+			</if>
+			<if test="collectinterval != null">
+				COLLECTINTERVAL,
+			</if>
+			<if test="expirydate != null">
+				EXPIRYDATE,
+			</if>
+			<if test="pubrate != null">
+				PUBRATE,
+			</if>
+			<if test="webtype != null">
+				WEBTYPE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="columnid != null">
+				#{columnid,jdbcType=VARCHAR},
+			</if>
+			<if test="columnname != null">
+				#{columnname,jdbcType=VARCHAR},
+			</if>
+			<if test="columnurl != null">
+				#{columnurl,jdbcType=VARCHAR},
+			</if>
+			<if test="columncharset != null">
+				#{columncharset,jdbcType=VARCHAR},
+			</if>
+			<if test="matchtype != null">
+				#{matchtype,jdbcType=CHAR},
+			</if>
+			<if test="bcontent != null">
+				#{bcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="ismonitor != null">
+				#{ismonitor,jdbcType=CHAR},
+			</if>
+			<if test="urlcfgstatus != null">
+				#{urlcfgstatus,jdbcType=CHAR},
+			</if>
+			<if test="elementcfgstatus != null">
+				#{elementcfgstatus,jdbcType=CHAR},
+			</if>
+			<if test="operator != null">
+				#{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="comcode != null">
+				#{comcode,jdbcType=VARCHAR},
+			</if>
+			<if test="makedate != null">
+				#{makedate,jdbcType=VARCHAR},
+			</if>
+			<if test="maketime != null">
+				#{maketime,jdbcType=VARCHAR},
+			</if>
+			<if test="webid != null">
+				#{webid,jdbcType=VARCHAR},
+			</if>
+			<if test="webname != null">
+				#{webname,jdbcType=VARCHAR},
+			</if>
+			<if test="weburl != null">
+				#{weburl,jdbcType=VARCHAR},
+			</if>
+			<if test="checkstatus != null">
+				#{checkstatus,jdbcType=CHAR},
+			</if>
+			<if test="checkdate != null">
+				#{checkdate,jdbcType=VARCHAR},
+			</if>
+			<if test="checktime != null">
+				#{checktime,jdbcType=VARCHAR},
+			</if>
+			<if test="pubstatus != null">
+				#{pubstatus,jdbcType=CHAR},
+			</if>
+			<if test="pubdate != null">
+				#{pubdate,jdbcType=VARCHAR},
+			</if>
+			<if test="pubtime != null">
+				#{pubtime,jdbcType=VARCHAR},
+			</if>
+			<if test="serverid != null">
+				#{serverid,jdbcType=VARCHAR},
+			</if>
+			<if test="ipaddr != null">
+				#{ipaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="lastcollectdate != null">
+				#{lastcollectdate,jdbcType=VARCHAR},
+			</if>
+			<if test="lastcollecttime != null">
+				#{lastcollecttime,jdbcType=VARCHAR},
+			</if>
+			<if test="collectinterval != null">
+				#{collectinterval,jdbcType=DECIMAL},
+			</if>
+			<if test="expirydate != null">
+				#{expirydate,jdbcType=DECIMAL},
+			</if>
+			<if test="pubrate != null">
+				#{pubrate,jdbcType=DECIMAL},
+			</if>
+			<if test="webtype != null">
+				#{webtype,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLColumn">
+		update TBLCOLUMN
+		<set>
+			<if test="columnname != null">
+				COLUMNNAME = #{columnname,jdbcType=VARCHAR},
+			</if>
+			<if test="columnurl != null">
+				COLUMNURL = #{columnurl,jdbcType=VARCHAR},
+			</if>
+			<if test="columncharset != null">
+				COLUMNCHARSET = #{columncharset,jdbcType=VARCHAR},
+			</if>
+			<if test="matchtype != null">
+				MATCHTYPE = #{matchtype,jdbcType=CHAR},
+			</if>
+			<if test="bcontent != null">
+				BCONTENT = #{bcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="ismonitor != null">
+				ISMONITOR = #{ismonitor,jdbcType=CHAR},
+			</if>
+			<if test="urlcfgstatus != null">
+				URLCFGSTATUS = #{urlcfgstatus,jdbcType=CHAR},
+			</if>
+			<if test="elementcfgstatus != null">
+				ELEMENTCFGSTATUS = #{elementcfgstatus,jdbcType=CHAR},
+			</if>
+			<if test="operator != null">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="comcode != null">
+				COMCODE = #{comcode,jdbcType=VARCHAR},
+			</if>
+			<if test="makedate != null">
+				MAKEDATE = #{makedate,jdbcType=VARCHAR},
+			</if>
+			<if test="maketime != null">
+				MAKETIME = #{maketime,jdbcType=VARCHAR},
+			</if>
+			<if test="webid != null">
+				WEBID = #{webid,jdbcType=VARCHAR},
+			</if>
+			<if test="webname != null">
+				WEBNAME = #{webname,jdbcType=VARCHAR},
+			</if>
+			<if test="weburl != null">
+				WEBURL = #{weburl,jdbcType=VARCHAR},
+			</if>
+			<if test="checkstatus != null">
+				CHECKSTATUS = #{checkstatus,jdbcType=CHAR},
+			</if>
+			<if test="checkdate != null">
+				CHECKDATE = #{checkdate,jdbcType=VARCHAR},
+			</if>
+			<if test="checktime != null">
+				CHECKTIME = #{checktime,jdbcType=VARCHAR},
+			</if>
+			<if test="pubstatus != null">
+				PUBSTATUS = #{pubstatus,jdbcType=CHAR},
+			</if>
+			<if test="pubdate != null">
+				PUBDATE = #{pubdate,jdbcType=VARCHAR},
+			</if>
+			<if test="pubtime != null">
+				PUBTIME = #{pubtime,jdbcType=VARCHAR},
+			</if>
+			<if test="serverid != null">
+				SERVERID = #{serverid,jdbcType=VARCHAR},
+			</if>
+			<if test="ipaddr != null">
+				IPADDR = #{ipaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="lastcollectdate != null">
+				LASTCOLLECTDATE = #{lastcollectdate,jdbcType=VARCHAR},
+			</if>
+			<if test="lastcollecttime != null">
+				LASTCOLLECTTIME = #{lastcollecttime,jdbcType=VARCHAR},
+			</if>
+			<if test="collectinterval != null">
+				COLLECTINTERVAL = #{collectinterval,jdbcType=DECIMAL},
+			</if>
+			<if test="expirydate != null">
+				EXPIRYDATE = #{expirydate,jdbcType=DECIMAL},
+			</if>
+			<if test="pubrate != null">
+				PUBRATE = #{pubrate,jdbcType=DECIMAL},
+			</if>
+			<if test="webtype != null">
+				WEBTYPE = #{webtype,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where COLUMNID = #{columnid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLColumn">
+		update TBLCOLUMN
+		set COLUMNNAME = #{columnname,jdbcType=VARCHAR},
+		COLUMNURL =
+		#{columnurl,jdbcType=VARCHAR},
+		COLUMNCHARSET =
+		#{columncharset,jdbcType=VARCHAR},
+		MATCHTYPE =
+		#{matchtype,jdbcType=CHAR},
+		BCONTENT = #{bcontent,jdbcType=VARCHAR},
+		ISMONITOR = #{ismonitor,jdbcType=CHAR},
+		URLCFGSTATUS =
+		#{urlcfgstatus,jdbcType=CHAR},
+		ELEMENTCFGSTATUS =
+		#{elementcfgstatus,jdbcType=CHAR},
+		OPERATOR =
+		#{operator,jdbcType=VARCHAR},
+		COMCODE = #{comcode,jdbcType=VARCHAR},
+		MAKEDATE = #{makedate,jdbcType=VARCHAR},
+		MAKETIME =
+		#{maketime,jdbcType=VARCHAR},
+		WEBID = #{webid,jdbcType=VARCHAR},
+		WEBNAME = #{webname,jdbcType=VARCHAR},
+		WEBURL =
+		#{weburl,jdbcType=VARCHAR},
+		CHECKSTATUS = #{checkstatus,jdbcType=CHAR},
+		CHECKDATE = #{checkdate,jdbcType=VARCHAR},
+		CHECKTIME =
+		#{checktime,jdbcType=VARCHAR},
+		PUBSTATUS = #{pubstatus,jdbcType=CHAR},
+		PUBDATE = #{pubdate,jdbcType=VARCHAR},
+		PUBTIME =
+		#{pubtime,jdbcType=VARCHAR},
+		SERVERID = #{serverid,jdbcType=VARCHAR},
+		IPADDR = #{ipaddr,jdbcType=VARCHAR},
+		LASTCOLLECTDATE =
+		#{lastcollectdate,jdbcType=VARCHAR},
+		LASTCOLLECTTIME =
+		#{lastcollecttime,jdbcType=VARCHAR},
+		COLLECTINTERVAL =
+		#{collectinterval,jdbcType=DECIMAL},
+		EXPIRYDATE =
+		#{expirydate,jdbcType=DECIMAL},
+		PUBRATE = #{pubrate,jdbcType=DECIMAL},
+		WEBTYPE = #{webtype,jdbcType=VARCHAR}
+		where COLUMNID =
+		#{columnid,jdbcType=VARCHAR}
+	</update>
+</mapper>

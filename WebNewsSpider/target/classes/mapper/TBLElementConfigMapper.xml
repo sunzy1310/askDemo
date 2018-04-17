@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLElementConfigMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLElementConfig">
+    <id column="RULEID" jdbcType="VARCHAR" property="ruleid" />
+    <result column="COLUMNID" jdbcType="VARCHAR" property="columnid" />
+    <result column="ELEMENTTYPE" jdbcType="VARCHAR" property="elementtype" />
+    <result column="RULETYPE" jdbcType="VARCHAR" property="ruletype" />
+    <result column="MATCHRULE" jdbcType="VARCHAR" property="matchrule" />
+    <result column="MATCHORDER" jdbcType="DECIMAL" property="matchorder" />
+    <result column="CHILDLABEL" jdbcType="VARCHAR" property="childlabel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    RULEID, COLUMNID, ELEMENTTYPE, RULETYPE, MATCHRULE, MATCHORDER, CHILDLABEL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLELEMENTCONFIG
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLELEMENTCONFIG
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLElementConfig">
+    insert into TBLELEMENTCONFIG (RULEID, COLUMNID, ELEMENTTYPE, 
+      RULETYPE, MATCHRULE, MATCHORDER, 
+      CHILDLABEL)
+    values (#{ruleid,jdbcType=VARCHAR}, #{columnid,jdbcType=VARCHAR}, #{elementtype,jdbcType=VARCHAR}, 
+      #{ruletype,jdbcType=VARCHAR}, #{matchrule,jdbcType=VARCHAR}, #{matchorder,jdbcType=DECIMAL}, 
+      #{childlabel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLElementConfig">
+    insert into TBLELEMENTCONFIG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ruleid != null">
+        RULEID,
+      </if>
+      <if test="columnid != null">
+        COLUMNID,
+      </if>
+      <if test="elementtype != null">
+        ELEMENTTYPE,
+      </if>
+      <if test="ruletype != null">
+        RULETYPE,
+      </if>
+      <if test="matchrule != null">
+        MATCHRULE,
+      </if>
+      <if test="matchorder != null">
+        MATCHORDER,
+      </if>
+      <if test="childlabel != null">
+        CHILDLABEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="columnid != null">
+        #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="elementtype != null">
+        #{elementtype,jdbcType=VARCHAR},
+      </if>
+      <if test="ruletype != null">
+        #{ruletype,jdbcType=VARCHAR},
+      </if>
+      <if test="matchrule != null">
+        #{matchrule,jdbcType=VARCHAR},
+      </if>
+      <if test="matchorder != null">
+        #{matchorder,jdbcType=DECIMAL},
+      </if>
+      <if test="childlabel != null">
+        #{childlabel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLElementConfig">
+    update TBLELEMENTCONFIG
+    <set>
+      <if test="columnid != null">
+        COLUMNID = #{columnid,jdbcType=VARCHAR},
+      </if>
+      <if test="elementtype != null">
+        ELEMENTTYPE = #{elementtype,jdbcType=VARCHAR},
+      </if>
+      <if test="ruletype != null">
+        RULETYPE = #{ruletype,jdbcType=VARCHAR},
+      </if>
+      <if test="matchrule != null">
+        MATCHRULE = #{matchrule,jdbcType=VARCHAR},
+      </if>
+      <if test="matchorder != null">
+        MATCHORDER = #{matchorder,jdbcType=DECIMAL},
+      </if>
+      <if test="childlabel != null">
+        CHILDLABEL = #{childlabel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLElementConfig">
+    update TBLELEMENTCONFIG
+    set COLUMNID = #{columnid,jdbcType=VARCHAR},
+      ELEMENTTYPE = #{elementtype,jdbcType=VARCHAR},
+      RULETYPE = #{ruletype,jdbcType=VARCHAR},
+      MATCHRULE = #{matchrule,jdbcType=VARCHAR},
+      MATCHORDER = #{matchorder,jdbcType=DECIMAL},
+      CHILDLABEL = #{childlabel,jdbcType=VARCHAR}
+    where RULEID = #{ruleid,jdbcType=VARCHAR}
+  </update>
+</mapper>

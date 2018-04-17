@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLTargetMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLTarget">
+    <id column="TARGETID" jdbcType="VARCHAR" property="targetid" />
+    <result column="TARGETNAME" jdbcType="VARCHAR" property="targetname" />
+    <result column="TASKSTATUS" jdbcType="CHAR" property="taskstatus" />
+    <result column="SERVERID" jdbcType="VARCHAR" property="serverid" />
+    <result column="SERVERIP" jdbcType="VARCHAR" property="serverip" />
+    <result column="MAKEDATE" jdbcType="VARCHAR" property="makedate" />
+    <result column="MAKETIME" jdbcType="VARCHAR" property="maketime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TARGETID, TARGETNAME, TASKSTATUS, SERVERID, SERVERIP, MAKEDATE, MAKETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLTARGET
+    where TARGETID = #{targetid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectIdByIpaddr" parameterType="java.lang.String" resultType="java.lang.String">
+  	select targetid from tbltarget where 
+  	serverip=#{ipaddr,jdbcType=VARCHAR} and taskstatus='0'
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLTARGET
+    where TARGETID = #{targetid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLTarget">
+    insert into TBLTARGET (TARGETID, TARGETNAME, TASKSTATUS, 
+      SERVERID, SERVERIP, MAKEDATE, 
+      MAKETIME)
+    values (#{targetid,jdbcType=VARCHAR}, #{targetname,jdbcType=VARCHAR}, #{taskstatus,jdbcType=CHAR}, 
+      #{serverid,jdbcType=VARCHAR}, #{serverip,jdbcType=VARCHAR}, #{makedate,jdbcType=VARCHAR}, 
+      #{maketime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLTarget">
+    insert into TBLTARGET
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="targetid != null">
+        TARGETID,
+      </if>
+      <if test="targetname != null">
+        TARGETNAME,
+      </if>
+      <if test="taskstatus != null">
+        TASKSTATUS,
+      </if>
+      <if test="serverid != null">
+        SERVERID,
+      </if>
+      <if test="serverip != null">
+        SERVERIP,
+      </if>
+      <if test="makedate != null">
+        MAKEDATE,
+      </if>
+      <if test="maketime != null">
+        MAKETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="targetid != null">
+        #{targetid,jdbcType=VARCHAR},
+      </if>
+      <if test="targetname != null">
+        #{targetname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskstatus != null">
+        #{taskstatus,jdbcType=CHAR},
+      </if>
+      <if test="serverid != null">
+        #{serverid,jdbcType=VARCHAR},
+      </if>
+      <if test="serverip != null">
+        #{serverip,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        #{maketime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLTarget">
+    update TBLTARGET
+    <set>
+      <if test="targetname != null">
+        TARGETNAME = #{targetname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskstatus != null">
+        TASKSTATUS = #{taskstatus,jdbcType=CHAR},
+      </if>
+      <if test="serverid != null">
+        SERVERID = #{serverid,jdbcType=VARCHAR},
+      </if>
+      <if test="serverip != null">
+        SERVERIP = #{serverip,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null">
+        MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        MAKETIME = #{maketime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TARGETID = #{targetid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLTarget">
+    update TBLTARGET
+    set TARGETNAME = #{targetname,jdbcType=VARCHAR},
+      TASKSTATUS = #{taskstatus,jdbcType=CHAR},
+      SERVERID = #{serverid,jdbcType=VARCHAR},
+      SERVERIP = #{serverip,jdbcType=VARCHAR},
+      MAKEDATE = #{makedate,jdbcType=VARCHAR},
+      MAKETIME = #{maketime,jdbcType=VARCHAR}
+    where TARGETID = #{targetid,jdbcType=VARCHAR}
+  </update>
+</mapper>

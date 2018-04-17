@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keyten.base.dao.TBLWebMapper">
+  <resultMap id="BaseResultMap" type="com.keyten.base.bean.TBLWeb">
+    <id column="WEBID" jdbcType="VARCHAR" property="webid" />
+    <result column="WEBNAME" jdbcType="VARCHAR" property="webname" />
+    <result column="WEBURL" jdbcType="VARCHAR" property="weburl" />
+    <result column="WEBTYPE" jdbcType="VARCHAR" property="webtype" />
+    <result column="DISTRIBUTIONSTATE" jdbcType="VARCHAR" property="distributionstate" />
+    <result column="DISTRIBUTIONPERSON" jdbcType="VARCHAR" property="distributionperson" />
+    <result column="DISTRIBUTIONCODE" jdbcType="VARCHAR" property="distributioncode" />
+    <result column="NOTEINFORMATION" jdbcType="VARCHAR" property="noteinformation" />
+    <result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+    <result column="COMCODE" jdbcType="VARCHAR" property="comcode" />
+    <result column="MODIFYDATE" jdbcType="VARCHAR" property="modifydate" />
+    <result column="MODIFYTIME" jdbcType="VARCHAR" property="modifytime" />
+    <result column="DEALSTATE" jdbcType="VARCHAR" property="dealstate" />
+    <result column="DEALDATE" jdbcType="VARCHAR" property="dealdate" />
+    <result column="DEALTIME" jdbcType="VARCHAR" property="dealtime" />
+    <result column="BUSINESSTYPE" jdbcType="VARCHAR" property="businesstype" />
+    <result column="TERRITORYORFOREIGN" jdbcType="VARCHAR" property="territoryorforeign" />
+    <result column="WEBNATIONAL" jdbcType="VARCHAR" property="webnational" />
+    <result column="WEBPROVINCE" jdbcType="VARCHAR" property="webprovince" />
+    <result column="WEBCITY" jdbcType="VARCHAR" property="webcity" />
+    <result column="WEBCOUNTY" jdbcType="VARCHAR" property="webcounty" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    WEBID, WEBNAME, WEBURL, WEBTYPE, DISTRIBUTIONSTATE, DISTRIBUTIONPERSON, DISTRIBUTIONCODE, 
+    NOTEINFORMATION, OPERATOR, COMCODE, MODIFYDATE, MODIFYTIME, DEALSTATE, DEALDATE, 
+    DEALTIME, BUSINESSTYPE, TERRITORYORFOREIGN, WEBNATIONAL, WEBPROVINCE, WEBCITY, WEBCOUNTY
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TBLWEB
+    where WEBID = #{webid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TBLWEB
+    where WEBID = #{webid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keyten.base.bean.TBLWeb">
+    insert into TBLWEB (WEBID, WEBNAME, WEBURL, 
+      WEBTYPE, DISTRIBUTIONSTATE, DISTRIBUTIONPERSON, 
+      DISTRIBUTIONCODE, NOTEINFORMATION, OPERATOR, 
+      COMCODE, MODIFYDATE, MODIFYTIME, 
+      DEALSTATE, DEALDATE, DEALTIME, 
+      BUSINESSTYPE, TERRITORYORFOREIGN, WEBNATIONAL, 
+      WEBPROVINCE, WEBCITY, WEBCOUNTY
+      )
+    values (#{webid,jdbcType=VARCHAR}, #{webname,jdbcType=VARCHAR}, #{weburl,jdbcType=VARCHAR}, 
+      #{webtype,jdbcType=VARCHAR}, #{distributionstate,jdbcType=VARCHAR}, #{distributionperson,jdbcType=VARCHAR}, 
+      #{distributioncode,jdbcType=VARCHAR}, #{noteinformation,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
+      #{comcode,jdbcType=VARCHAR}, #{modifydate,jdbcType=VARCHAR}, #{modifytime,jdbcType=VARCHAR}, 
+      #{dealstate,jdbcType=VARCHAR}, #{dealdate,jdbcType=VARCHAR}, #{dealtime,jdbcType=VARCHAR}, 
+      #{businesstype,jdbcType=VARCHAR}, #{territoryorforeign,jdbcType=VARCHAR}, #{webnational,jdbcType=VARCHAR}, 
+      #{webprovince,jdbcType=VARCHAR}, #{webcity,jdbcType=VARCHAR}, #{webcounty,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.keyten.base.bean.TBLWeb">
+    insert into TBLWEB
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="webid != null">
+        WEBID,
+      </if>
+      <if test="webname != null">
+        WEBNAME,
+      </if>
+      <if test="weburl != null">
+        WEBURL,
+      </if>
+      <if test="webtype != null">
+        WEBTYPE,
+      </if>
+      <if test="distributionstate != null">
+        DISTRIBUTIONSTATE,
+      </if>
+      <if test="distributionperson != null">
+        DISTRIBUTIONPERSON,
+      </if>
+      <if test="distributioncode != null">
+        DISTRIBUTIONCODE,
+      </if>
+      <if test="noteinformation != null">
+        NOTEINFORMATION,
+      </if>
+      <if test="operator != null">
+        OPERATOR,
+      </if>
+      <if test="comcode != null">
+        COMCODE,
+      </if>
+      <if test="modifydate != null">
+        MODIFYDATE,
+      </if>
+      <if test="modifytime != null">
+        MODIFYTIME,
+      </if>
+      <if test="dealstate != null">
+        DEALSTATE,
+      </if>
+      <if test="dealdate != null">
+        DEALDATE,
+      </if>
+      <if test="dealtime != null">
+        DEALTIME,
+      </if>
+      <if test="businesstype != null">
+        BUSINESSTYPE,
+      </if>
+      <if test="territoryorforeign != null">
+        TERRITORYORFOREIGN,
+      </if>
+      <if test="webnational != null">
+        WEBNATIONAL,
+      </if>
+      <if test="webprovince != null">
+        WEBPROVINCE,
+      </if>
+      <if test="webcity != null">
+        WEBCITY,
+      </if>
+      <if test="webcounty != null">
+        WEBCOUNTY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="webid != null">
+        #{webid,jdbcType=VARCHAR},
+      </if>
+      <if test="webname != null">
+        #{webname,jdbcType=VARCHAR},
+      </if>
+      <if test="weburl != null">
+        #{weburl,jdbcType=VARCHAR},
+      </if>
+      <if test="webtype != null">
+        #{webtype,jdbcType=VARCHAR},
+      </if>
+      <if test="distributionstate != null">
+        #{distributionstate,jdbcType=VARCHAR},
+      </if>
+      <if test="distributionperson != null">
+        #{distributionperson,jdbcType=VARCHAR},
+      </if>
+      <if test="distributioncode != null">
+        #{distributioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="noteinformation != null">
+        #{noteinformation,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="comcode != null">
+        #{comcode,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null">
+        #{modifydate,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="dealstate != null">
+        #{dealstate,jdbcType=VARCHAR},
+      </if>
+      <if test="dealdate != null">
+        #{dealdate,jdbcType=VARCHAR},
+      </if>
+      <if test="dealtime != null">
+        #{dealtime,jdbcType=VARCHAR},
+      </if>
+      <if test="businesstype != null">
+        #{businesstype,jdbcType=VARCHAR},
+      </if>
+      <if test="territoryorforeign != null">
+        #{territoryorforeign,jdbcType=VARCHAR},
+      </if>
+      <if test="webnational != null">
+        #{webnational,jdbcType=VARCHAR},
+      </if>
+      <if test="webprovince != null">
+        #{webprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="webcity != null">
+        #{webcity,jdbcType=VARCHAR},
+      </if>
+      <if test="webcounty != null">
+        #{webcounty,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keyten.base.bean.TBLWeb">
+    update TBLWEB
+    <set>
+      <if test="webname != null">
+        WEBNAME = #{webname,jdbcType=VARCHAR},
+      </if>
+      <if test="weburl != null">
+        WEBURL = #{weburl,jdbcType=VARCHAR},
+      </if>
+      <if test="webtype != null">
+        WEBTYPE = #{webtype,jdbcType=VARCHAR},
+      </if>
+      <if test="distributionstate != null">
+        DISTRIBUTIONSTATE = #{distributionstate,jdbcType=VARCHAR},
+      </if>
+      <if test="distributionperson != null">
+        DISTRIBUTIONPERSON = #{distributionperson,jdbcType=VARCHAR},
+      </if>
+      <if test="distributioncode != null">
+        DISTRIBUTIONCODE = #{distributioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="noteinformation != null">
+        NOTEINFORMATION = #{noteinformation,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="comcode != null">
+        COMCODE = #{comcode,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null">
+        MODIFYDATE = #{modifydate,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        MODIFYTIME = #{modifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="dealstate != null">
+        DEALSTATE = #{dealstate,jdbcType=VARCHAR},
+      </if>
+      <if test="dealdate != null">
+        DEALDATE = #{dealdate,jdbcType=VARCHAR},
+      </if>
+      <if test="dealtime != null">
+        DEALTIME = #{dealtime,jdbcType=VARCHAR},
+      </if>
+      <if test="businesstype != null">
+        BUSINESSTYPE = #{businesstype,jdbcType=VARCHAR},
+      </if>
+      <if test="territoryorforeign != null">
+        TERRITORYORFOREIGN = #{territoryorforeign,jdbcType=VARCHAR},
+      </if>
+      <if test="webnational != null">
+        WEBNATIONAL = #{webnational,jdbcType=VARCHAR},
+      </if>
+      <if test="webprovince != null">
+        WEBPROVINCE = #{webprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="webcity != null">
+        WEBCITY = #{webcity,jdbcType=VARCHAR},
+      </if>
+      <if test="webcounty != null">
+        WEBCOUNTY = #{webcounty,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WEBID = #{webid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keyten.base.bean.TBLWeb">
+    update TBLWEB
+    set WEBNAME = #{webname,jdbcType=VARCHAR},
+      WEBURL = #{weburl,jdbcType=VARCHAR},
+      WEBTYPE = #{webtype,jdbcType=VARCHAR},
+      DISTRIBUTIONSTATE = #{distributionstate,jdbcType=VARCHAR},
+      DISTRIBUTIONPERSON = #{distributionperson,jdbcType=VARCHAR},
+      DISTRIBUTIONCODE = #{distributioncode,jdbcType=VARCHAR},
+      NOTEINFORMATION = #{noteinformation,jdbcType=VARCHAR},
+      OPERATOR = #{operator,jdbcType=VARCHAR},
+      COMCODE = #{comcode,jdbcType=VARCHAR},
+      MODIFYDATE = #{modifydate,jdbcType=VARCHAR},
+      MODIFYTIME = #{modifytime,jdbcType=VARCHAR},
+      DEALSTATE = #{dealstate,jdbcType=VARCHAR},
+      DEALDATE = #{dealdate,jdbcType=VARCHAR},
+      DEALTIME = #{dealtime,jdbcType=VARCHAR},
+      BUSINESSTYPE = #{businesstype,jdbcType=VARCHAR},
+      TERRITORYORFOREIGN = #{territoryorforeign,jdbcType=VARCHAR},
+      WEBNATIONAL = #{webnational,jdbcType=VARCHAR},
+      WEBPROVINCE = #{webprovince,jdbcType=VARCHAR},
+      WEBCITY = #{webcity,jdbcType=VARCHAR},
+      WEBCOUNTY = #{webcounty,jdbcType=VARCHAR}
+    where WEBID = #{webid,jdbcType=VARCHAR}
+  </update>
+</mapper>
